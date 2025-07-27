@@ -1,8 +1,8 @@
 pipeline {
     agent any
 
-    environment {
-        DISABLE_LOGGING = 'true'
+    tools {
+        nodejs 'NodeJS' // 👈 This name must match exactly with the one in the plugin config
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
 
         stage('Deploy (Simulated)') {
             steps {
-                echo 'ssh user@your-vps-ip "cd /app && git pull && pm2 restart app"'
+                echo 'ssh user@your-vps "cd /app && git pull && pm2 restart app"'
             }
         }
     }
