@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS' // 👈 This name must match exactly with the one in the plugin config
+        nodejs 'NodeJS'
     }
 
     stages {
