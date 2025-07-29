@@ -13,13 +13,25 @@ pipeline {
         }
 
         stage('Build') {
+            // Không build nếu là PR vào nhánh khác
+            when {
+                not {
+                    changeRequest()
+                }
+            }
             steps {
-                echo "Build running on branch: ${env.GIT_BRANCH}"
+                echo "Build running on branch: ${env.BRANCH_NAME}"
                 sh 'echo "Pretend to build..."'
             }
         }
 
         stage('Test') {
+            // Không test nếu là PR vào nhánh khác
+            when {
+                not {
+                    changeRequest()
+                }
+            }
             steps {
                 sh 'npm install'
                 sh 'npm test'
@@ -28,7 +40,10 @@ pipeline {
 
         stage('Deploy to Dev') {
             when {
-                expression { env.GIT_BRANCH == 'dev' }
+                allOf {
+                    branch 'dev'
+                    not { changeRequest() } // Không chạy nếu dev là source của PR
+                }
             }
             steps {
                 echo "Deploying to Dev server..."
@@ -38,7 +53,10 @@ pipeline {
 
         stage('Deploy to QA') {
             when {
-                expression { env.GIT_BRANCH == 'qa' }
+                allOf {
+                    branch 'qa'
+                    not { changeRequest() }
+                }
             }
             steps {
                 echo "Deploying to QA server..."
@@ -48,11 +66,23 @@ pipeline {
 
         stage('Deploy to Production') {
             when {
-                expression { env.GIT_BRANCH == 'main' }
+                allOf {
+                    branch 'main'
+                    not { changeRequest() }
+                }
             }
             steps {
                 echo "Deploying to Production server..."
                 // script here
+            }
+        }
+
+        stage('Handle Pull Requests') {
+            when {
+                changeRequest()
+            }
+            steps {
+                echo "🚀 This is a PR from ${env.CHANGE_BRANCH} into ${env.CHANGE_TARGET}"
             }
         }
     }
