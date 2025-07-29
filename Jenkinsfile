@@ -99,8 +99,14 @@ pipeline {
                 echo "🚀 Deploying to QA server..."
                 echo "   - Branch: qa"
                 echo "   - Environment: Quality Assurance"
+                echo "   - Trigger: Direct push/merge to qa (NOT from PR)"
+                echo "   - This ONLY runs after merging PR, not during PR creation!"
+                
                 // Thêm script deploy thực tế ở đây
                 sh 'echo "Deploy to QA completed!"'
+                
+                // Optional: Slack/Teams notification
+                echo "📢 QA deployment completed from merged code!"
             }
         }
 
