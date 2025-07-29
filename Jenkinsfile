@@ -32,7 +32,7 @@ pipeline {
             }
             steps {
                 echo "Deploying to Dev server..."
-                // sh 'your-deploy-script-dev.sh'
+                // script here
             }
         }
 
@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
                 echo "Deploying to QA server..."
-                // sh 'your-deploy-script-qa.sh'
+                // script here
             }
         }
 
@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 echo "Deploying to Production server..."
-                // sh 'your-deploy-script-prod.sh'
+                // script here
             }
         }
     }
