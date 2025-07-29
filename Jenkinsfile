@@ -38,7 +38,7 @@ pipeline {
 
         stage('Deploy to QA') {
             when {
-                expression { env.GIT_BRANCH == 'origin/qa' }
+                expression { env.GIT_BRANCH == 'qa' }
             }
             steps {
                 echo "Deploying to QA server..."
@@ -48,7 +48,7 @@ pipeline {
 
         stage('Deploy to Production') {
             when {
-                expression { env.GIT_BRANCH == 'origin/main' }
+                expression { env.GIT_BRANCH == 'main' }
             }
             steps {
                 echo "Deploying to Production server..."
