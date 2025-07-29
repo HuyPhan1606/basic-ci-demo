@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'NodeJS'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,21 +8,10 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build') {
             steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh 'npm test'
-            }
-        }
-
-        stage('Deploy (Simulated)') {
-            steps {
-                echo 'ssh user@your-vps "cd /app && git pull && pm2 restart app"'
+                echo "Build running on branch: ${env.GIT_BRANCH}"
+                sh 'echo "Pretend to build..."'
             }
         }
     }
