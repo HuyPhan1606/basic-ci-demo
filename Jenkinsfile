@@ -14,5 +14,42 @@ pipeline {
                 sh 'echo "Pretend to build..."'
             }
         }
+
+        stage('Test') {
+            steps {
+                sh 'npm install'
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy to Dev') {
+            when {
+                branch 'dev'
+            }
+            steps {
+                echo "Deploying to Dev server..."
+                // sh 'your-deploy-script-dev.sh'
+            }
+        }
+
+        stage('Deploy to QA') {
+            when {
+                branch 'qa'
+            }
+            steps {
+                echo "Deploying to QA server..."
+                // sh 'your-deploy-script-qa.sh'
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "Deploying to Production server..."
+                // sh 'your-deploy-script-prod.sh'
+            }
+        }
     }
 }
